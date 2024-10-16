@@ -1,0 +1,81 @@
+main:
+  title: "游戏时长统计"
+  row: 2
+  format:
+    - "1  2 3  4"
+    - "####$####"
+  split:
+    material: GRAY_STAINED_GLASS_PANE
+    name: " "
+  close:
+    material: BARRIER
+    name: "关闭"
+  description:
+    material: PLAYER_HEAD
+    name: "%player_name%"
+    lore:
+      - "今日游戏时间: %daily_played%"
+      - "本月游戏时间: %monthly_played%"
+  today_rewards:
+    material: CHEST
+    name: "今日礼包"
+  monthly_rewards:
+    material: CHEST
+    name: "今月礼包"
+  leader:
+    material: CHEST
+    name: "排行榜"
+rewards:
+  title: "游戏时长礼包领取"
+  rows: 2
+  format:
+    - "111111111"
+    - "####$####"
+  split:
+    material: GRAY_STAINED_GLASS_PANE
+    name: " "
+  claim_active:
+    material: ENCHANTING_TABLE
+    name: "%reward_name%"
+    lore:
+      - "已到达领取要求: %time%"
+      - "点击领取"
+  claimed:
+    material: BARRIER
+    name: "你已经领取过了"
+    lore:
+      - "下次再来"
+  claim_inactive:
+    material: ENCHANTING_TABLE
+    name: "%reward_name%"
+    lore:
+      - "领取要求: %time%"
+      - "还没到达时间"
+  back:
+    material: CHEST
+    name: "返回"
+
+leader:
+  title: "排行榜"
+  row: 6
+  format:
+    - "#########"
+    - "#   $   #"
+    - "#  $ $  #"
+    - "# $ $ $ #"
+    - "#$ $ $ $#"
+    - "####!####"
+  split:
+    material: GRAY_STAINED_GLASS_PANE
+    name: " "
+  leader:
+    material: PLAYER_HEAD
+    name: "[%index%] %name%"
+    lore:
+      - "时间: %time%"
+      - "奖励: %reward%"
+  back:
+    material: CHEST
+    name: "返回"
+
+
