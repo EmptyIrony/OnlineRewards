@@ -13,9 +13,6 @@ object Rewards {
     lateinit var config: Configuration
 
     val dailyRewards = ArrayList<RewardData>()
-    val monthlyRewards = ArrayList<RewardData>()
-
-    val leaderRewards = ArrayList<LeaderRewardData>()
 
 
     @Awake(LifeCycle.ENABLE)
@@ -26,19 +23,6 @@ object Rewards {
             dailyRewards += dailySection.getConfigurationSection(name)!!.toObject<RewardData>(ignoreConstructor = true)
         }
         dailyRewards.sortBy { it.requiredOnline }
-
-        monthlyRewards.clear()
-        val monthlySection = config.getConfigurationSection("monthly")!!
-        for (rewardName in monthlySection.getKeys(false)) {
-            monthlyRewards += monthlySection.getConfigurationSection(rewardName)!!.toObject<RewardData>(ignoreConstructor = true)
-        }
-        monthlyRewards.sortBy { it.requiredOnline }
-
-        leaderRewards.clear()
-        val leaderSection = config.getConfigurationSection("leader")!!
-        for (rewardName in leaderSection.getKeys(false)) {
-            leaderRewards += leaderSection.getConfigurationSection(rewardName)!!.toObject<LeaderRewardData>(ignoreConstructor = true)
-        }
     }
 
 
@@ -54,10 +38,5 @@ object Rewards {
             return "RewardData(name='$name', requiredOnline=$requiredOnline, requiredOnlineReadable='$requiredOnlineReadable', rewards=$rewards)"
         }
     }
-
-    data class LeaderRewardData(
-        val name: String,
-        val rewards: List<String>
-    )
 
 }

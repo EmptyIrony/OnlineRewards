@@ -2,7 +2,6 @@ package me.cunzai.plugin.onlinerewards
 
 import me.cunzai.plugin.onlinerewards.database.MySQLHandler
 import me.cunzai.plugin.onlinerewards.database.RedisHandler
-import me.cunzai.plugin.onlinerewards.misc.LeaderboardHandler
 import me.cunzai.plugin.onlinerewards.rewards.Rewards
 import me.cunzai.plugin.onlinerewards.ui.UIs
 import org.bukkit.Bukkit
@@ -17,33 +16,9 @@ import taboolib.module.chat.colored
 object OnlineRewardsCommand {
 
     @CommandBody(permissionDefault = PermissionDefault.TRUE)
-    val open = subCommand {
+    val open = mainCommand {
         execute<Player> { sender, _, _ ->
-            UIs.openMainUI(sender)
-        }
-    }
-
-    @CommandBody(permission = "onlinereward.admin")
-    val sendLeaderboardRewards = subCommand {
-        execute<CommandSender> { sender, _, _ ->
-            for ((index, leader) in LeaderboardHandler.leaders.withIndex()) {
-                Rewards.leaderRewards.getOrNull(index)?.rewards?.forEach { reward ->
-                    Bukkit.dispatchCommand(
-                        Bukkit.getConsoleSender(),
-                        reward.replace("%player%", leader.name)
-                    )
-                }
-            }
-
-            submitAsync {
-                MySQLHandler.clearMonthly()
-                RedisHandler.redisConnection.connection().use { connection ->
-                    connection.publish("online_rewards_broadcast", RedisHandler.ClearCacheAndReload(System.currentTimeMillis()))
-                }
-                sender.sendMessage("&a月记录清理完成".colored())
-            }
-
-            sender.sendMessage("&a奖励发放完成".colored())
+            UIs.openRewardsUI(sender)
         }
     }
 
@@ -56,11 +31,6 @@ object OnlineRewardsCommand {
 
             sender.sendMessage("ok")
         }
-    }
-
-    @CommandBody
-    val helper = mainCommand {
-        createHelper(checkPermissions = true)
     }
 
 }
