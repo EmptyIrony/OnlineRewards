@@ -4,23 +4,22 @@ import io.izzel.taboolib.gradle.*
 
 plugins {
     java
-    id("io.izzel.taboolib") version "2.0.11"
+    id("io.izzel.taboolib") version "2.0.19"
     id("org.jetbrains.kotlin.jvm") version "1.8.22"
 }
 
 taboolib {
     env {
-        install(UNIVERSAL)
-        install(BUKKIT_ALL)
-        install(UI)
-        install(DATABASE)
-        install(EXPANSION_REDIS)
+        install(Basic)
+        install(Bukkit, BukkitUtil, BukkitHook, BukkitNMSUtil, BukkitUI)
+        install(DatabaseAlkaidRedis)
+        install(Database)
     }
     description {
         name = "OnlineRewards"
     }
 
-    version { taboolib = "6.1.1-beta17" }
+    version { taboolib = "6.2.0-beta18" }
 }
 
 repositories {

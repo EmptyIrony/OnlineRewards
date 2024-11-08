@@ -1,12 +1,10 @@
 package me.cunzai.plugin.onlinerewards.ui
 
 import me.cunzai.plugin.onlinerewards.data.PlayerData
-import me.cunzai.plugin.onlinerewards.misc.millisToRoundedTime
 import me.cunzai.plugin.onlinerewards.rewards.Rewards
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import taboolib.common.platform.function.submitAsync
-import taboolib.library.xseries.XSkull
 import taboolib.library.xseries.getItemStack
 import taboolib.module.configuration.Config
 import taboolib.module.configuration.Configuration
@@ -37,16 +35,16 @@ object UIs {
             set('$', section.getItemStack("back")!!) {
                 isCancelled = true
                 Bukkit.dispatchCommand(
-                    player, section.getString("back")!!
+                    player, section.getString("back.command")!!
                         .replace("%player%", player.name)
                 )
             }
 
             val rewardSlots = getSlots('1')
 
-            for (rewardSlot in rewardSlots) {
+            for ((index, rewardSlot) in rewardSlots.withIndex()) {
                 val rewards = Rewards.dailyRewards
-                val rewardData = rewards.getOrNull(rewardSlot) ?: break
+                val rewardData = rewards.getOrNull(index) ?: break
                 val claimedRewards = data.claimedDailyRewards
                 if (claimedRewards.contains(rewardData.name)) {
                     set(rewardSlot, section.getItemStack("claimed")!!) {
@@ -55,11 +53,15 @@ object UIs {
                 } else {
                     val onlineTime = data.getDailyOnlineTime()
                     if (onlineTime >= rewardData.requiredOnline) {
-                        set(rewardSlot, section.getItemStack("claim_active")!!
-                            .replaceName("%reward_name%", rewardData.name)
-                            .replaceName("%time%", rewardData.requiredOnlineReadable)
-                            .replaceLore("%reward_name%", rewardData.name)
-                            .replaceLore("%time%", rewardData.requiredOnlineReadable)) {
+
+                        set(
+                            rewardSlot, buildItem(rewardData.icon.clone()) {
+                                lore += section.getStringList("claim_active.lore")
+                            }.replaceName("%reward_name%", rewardData.name)
+                                .replaceName("%time%", rewardData.requiredOnlineReadable)
+                                .replaceLore("%reward_name%", rewardData.name)
+                                .replaceLore("%time%", rewardData.requiredOnlineReadable)
+                        ) {
                             isCancelled = true
 
                             claimedRewards += rewardData.name
@@ -76,11 +78,15 @@ object UIs {
                             openRewardsUI(player)
                         }
                     } else {
-                        set(rewardSlot, section.getItemStack("claim_inactive")!!
-                            .replaceName("%reward_name%", rewardData.name)
-                            .replaceName("%time%", rewardData.requiredOnlineReadable)
-                            .replaceLore("%reward_name%", rewardData.name)
-                            .replaceLore("%time%", rewardData.requiredOnlineReadable)) {
+
+                        set(
+                            rewardSlot, buildItem(rewardData.icon.clone()) {
+                                lore += section.getStringList("claim_inactive.lore")
+                            }.replaceName("%reward_name%", rewardData.name)
+                                .replaceName("%time%", rewardData.requiredOnlineReadable)
+                                .replaceLore("%reward_name%", rewardData.name)
+                                .replaceLore("%time%", rewardData.requiredOnlineReadable)
+                        ) {
                             isCancelled = true
                         }
                     }

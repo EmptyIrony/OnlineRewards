@@ -7,6 +7,9 @@ daily:
     required_online_readable: "1秒"
     rewards:
       - "give %player% diamond"
+    icon:
+      material: STONE
+      name: "石头"
   2点券:
     name: "2点券"
     # 毫秒
@@ -15,6 +18,9 @@ daily:
     required_online_readable: "5分钟"
     rewards:
       - "give %player% diamond"
+    icon:
+      material: STONE
+      name: "石头"
   30点券:
     name: "30点券"
     # 毫秒
@@ -23,3 +29,6 @@ daily:
     required_online_readable: "3小时"
     rewards:
       - "give %player% diamond"
+    icon:
+      material: STONE
+      name: "石头"

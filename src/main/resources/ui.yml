@@ -8,19 +8,15 @@ rewards:
     material: GRAY_STAINED_GLASS_PANE
     name: " "
   claim_active:
-    material: ENCHANTING_TABLE
-    name: "%reward_name%"
     lore:
-      - "已到达领取要求: %time%"
-      - "点击领取"
+      - "领取要求: %time%"
+      - "还没到达时间"
   claimed:
     material: BARRIER
     name: "你已经领取过了"
     lore:
       - "下次再来"
   claim_inactive:
-    material: ENCHANTING_TABLE
-    name: "%reward_name%"
     lore:
       - "领取要求: %time%"
       - "还没到达时间"
